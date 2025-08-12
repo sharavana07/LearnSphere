@@ -1,8 +1,9 @@
-// src/app/dashboard/page.tsx
+import ChatTutor from "@/components/ChatTutor";
+
 export default function Dashboard() {
   return (
     <div className="flex">
-      {/* Sidebar */}
+      {/* Sidebar is rendered outside in layout */}
 
       {/* Main Dashboard Content */}
       <main className="flex-1 min-h-screen bg-gray-50">
@@ -32,18 +33,22 @@ export default function Dashboard() {
           <div className="bg-white shadow rounded-lg p-4">
             <h2 className="text-lg font-semibold mb-4">Quick Stats</h2>
             <ul className="space-y-2 text-sm">
-              <li>Streak: <span className="font-bold">5 days</span></li>
-              <li>Quizzes Completed: <span className="font-bold">12</span></li>
-              <li>Time Spent: <span className="font-bold">14 hrs</span></li>
+              <li>
+                Streak: <span className="font-bold">5 days</span>
+              </li>
+              <li>
+                Quizzes Completed: <span className="font-bold">12</span>
+              </li>
+              <li>
+                Time Spent: <span className="font-bold">14 hrs</span>
+              </li>
             </ul>
           </div>
 
           {/* AI Chat Tutor Widget */}
           <div className="bg-white shadow rounded-lg p-4 col-span-3">
             <h2 className="text-lg font-semibold mb-4">AI Chat Tutor</h2>
-            <div className="border rounded-md h-48 flex items-center justify-center text-gray-500">
-              Chat interface coming soon...
-            </div>
+            <ChatTutor />
           </div>
         </div>
       </main>

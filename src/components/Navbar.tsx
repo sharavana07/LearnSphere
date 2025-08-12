@@ -24,6 +24,21 @@ export default function Navbar() {
             >
               Dashboard
             </Link>
+
+            <Link
+              href="/subjects"
+              className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200"
+            >
+              Subject
+            </Link>
+
+            <Link
+              href="/community"
+              className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200"
+            >
+              Community
+            </Link>
+
             <button
               onClick={() => setIsLoginOpen(true)}
               className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"

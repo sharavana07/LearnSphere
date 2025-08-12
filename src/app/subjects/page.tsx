@@ -1,112 +1,80 @@
-import Tabs from "@/components/Tabs";
+// src/app/subjects/page.tsx
+"use client";
 
-const mockSyllabus = [
-  { week: 1, title: "Foundations: Variables & Control Flow" },
-  { week: 2, title: "Functions & Data Structures" },
-  { week: 3, title: "OOP & Modules" },
-  { week: 4, title: "Project: Build a Mini App" },
-];
-
-function LearningPathsPanel() {
-  return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold">AI-generated Learning Path</h3>
-      <p className="text-sm text-gray-600">
-        This syllabus adapts as you progress — weak topics get extra practice automatically.
-      </p>
-
-      <div className="mt-4 grid gap-3">
-        {mockSyllabus.map((s) => (
-          <div key={s.week} className="flex items-center justify-between bg-indigo-50 p-3 rounded">
-            <div>
-              <div className="font-semibold">Week {s.week}</div>
-              <div className="text-sm text-gray-600">{s.title}</div>
-            </div>
-            <div className="text-sm text-indigo-600">Estimated time: 3–4 hrs</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-4 flex gap-3">
-        <button className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Start Path</button>
-        <button className="bg-white border px-4 py-2 rounded hover:bg-gray-100">Customize</button>
-      </div>
-    </div>
-  );
-}
-
-function QuizPanel() {
-  return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold">Adaptive Quiz</h3>
-      <p className="text-sm text-gray-600">Quick practice to assess current mastery. Difficulty adapts by performance.</p>
-
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="p-4 bg-white rounded shadow">
-          <div className="font-semibold">Topic: Functions</div>
-          <div className="text-sm text-gray-500">Adaptive difficulty: Medium</div>
-          <div className="mt-3 flex gap-2">
-            <button className="px-3 py-1 bg-indigo-600 text-white rounded">Start Quiz</button>
-            <button className="px-3 py-1 border rounded">Practice</button>
-          </div>
-        </div>
-
-        <div className="p-4 bg-white rounded shadow">
-          <div className="font-semibold">Mixed: 10 questions</div>
-          <div className="text-sm text-gray-500">Time: 10 minutes</div>
-          <div className="mt-3 flex gap-2">
-            <button className="px-3 py-1 bg-indigo-600 text-white rounded">Start</button>
-            <button className="px-3 py-1 border rounded">Preview</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ResourcesPanel() {
-  const resources = [
-    { id: 1, title: "Intro Video: Variables", type: "Video", length: "8m" },
-    { id: 2, title: "Cheat Sheet: Control Flow", type: "PDF", length: "1 page" },
-    { id: 3, title: "Interactive Playground: Try it", type: "Tool", length: "Web" },
-  ];
-
-  return (
-    <div>
-      <h3 className="text-lg font-semibold">Resources Library</h3>
-      <p className="text-sm text-gray-600">Search and filter curated notes, videos and interactive examples.</p>
-
-      <div className="mt-4 space-y-3">
-        {resources.map((r) => (
-          <div key={r.id} className="flex items-center justify-between bg-white p-3 rounded shadow">
-            <div>
-              <div className="font-medium">{r.title}</div>
-              <div className="text-sm text-gray-500">{r.type} · {r.length}</div>
-            </div>
-            <div className="flex gap-2">
-              <button className="px-3 py-1 border rounded">Open</button>
-              <button className="px-3 py-1 bg-indigo-50 text-indigo-600 rounded">Save</button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+import { useState } from "react";
 
 export default function SubjectsPage() {
-  const tabs = [
-    { title: "Learning Paths", panel: <LearningPathsPanel /> },
-    { title: "Quiz", panel: <QuizPanel /> },
-    { title: "Resources", panel: <ResourcesPanel /> },
-  ];
+  const tabs = ["Learning Paths", "Quiz", "Resources"];
+  const [activeTab, setActiveTab] = useState("Learning Paths");
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Subjects</h1>
-      <p className="text-sm text-gray-600 mb-6">Choose a subject and explore learning paths, quizzes and resources.</p>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <h1 className="text-2xl font-bold mb-6 text-indigo-600">Subjects</h1>
 
-      <Tabs tabs={tabs} />
+      {/* Tabs */}
+      <div className="flex space-x-4 border-b mb-6">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`pb-2 px-4 ${
+              activeTab === tab
+                ? "border-b-2 border-indigo-600 text-indigo-600 font-semibold"
+                : "text-gray-500 hover:text-indigo-500"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      <div className="bg-white shadow rounded-lg p-6">
+        {activeTab === "Learning Paths" && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">AI-Generated Syllabus</h2>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Introduction to Subject</li>
+              <li>Core Concepts & Fundamentals</li>
+              <li>Advanced Topics & Projects</li>
+              <li>Revision & Final Assessment</li>
+            </ul>
+          </div>
+        )}
+
+        {activeTab === "Quiz" && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Available Quizzes</h2>
+            <ul className="space-y-2 text-gray-700">
+              <li>Beginner Quiz – 10 Questions</li>
+              <li>Intermediate Quiz – 20 Questions</li>
+              <li>Mixed Quiz – Random Difficulty</li>
+            </ul>
+          </div>
+        )}
+
+        {activeTab === "Resources" && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Resources Library</h2>
+            <input
+              type="text"
+              placeholder="Search resources..."
+              className="w-full p-2 border rounded mb-4"
+            />
+            <ul className="space-y-2 text-blue-600">
+              <li>
+                <a href="#" className="hover:underline">Lecture Notes – PDF</a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">Video Tutorial – YouTube</a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">Example Projects – GitHub</a>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

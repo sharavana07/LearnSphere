@@ -1,0 +1,30 @@
+// src/app/dashboard/layout.tsx
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Top Navbar - not fixed for dashboard */}
+      <div className="shadow-md">
+        <Navbar />
+      </div>
+
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <div className="border-r bg-white w-64">
+          <Sidebar />
+        </div>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6 bg-gray-50 overflow-y-auto">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
