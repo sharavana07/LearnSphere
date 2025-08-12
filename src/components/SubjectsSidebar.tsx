@@ -45,6 +45,42 @@ export default function SubjectsSidebar() {
 
       {/* Navigation Links */}
       <div className="flex-1 px-3 py-4 space-y-1">
+        {/* Link to All Subjects */}
+        <Link
+          href="/subjects"
+          className={`
+            group relative flex items-center px-3 py-3 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out
+            ${
+              pathname === "/subjects"
+                ? "bg-indigo-100 text-indigo-700 shadow-sm border-l-4 border-indigo-600"
+                : "text-slate-700 hover:text-indigo-700 hover:bg-slate-100"
+            }
+          `}
+          aria-current={pathname === "/subjects" ? "page" : undefined}
+        >
+          <BookOpen
+            className={`
+              h-5 w-5 mr-3 transition-colors duration-200
+              ${pathname === "/subjects" ? "text-indigo-600" : "text-slate-400 group-hover:text-indigo-500"}
+            `}
+          />
+          <div className="flex-1 min-w-0 font-semibold">All Subjects</div>
+          <ChevronRight
+            className={`
+              h-4 w-4 transition-all duration-200
+              ${
+                pathname === "/subjects"
+                  ? "text-indigo-600 opacity-100"
+                  : "text-slate-400 opacity-0 group-hover:opacity-100 group-hover:text-indigo-500 group-hover:translate-x-0.5"
+              }
+            `}
+          />
+          {pathname === "/subjects" && (
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-600 rounded-r-full" />
+          )}
+        </Link>
+
+        {/* Existing subject links */}
         {subjects.map((subject) => {
           const Icon = subject.icon;
           const isActive = pathname === subject.href;
@@ -63,15 +99,12 @@ export default function SubjectsSidebar() {
               `}
               aria-current={isActive ? "page" : undefined}
             >
-              {/* Icon */}
               <Icon
                 className={`
                   h-5 w-5 mr-3 transition-colors duration-200
                   ${isActive ? "text-indigo-600" : "text-slate-400 group-hover:text-indigo-500"}
                 `}
               />
-
-              {/* Content */}
               <div className="flex-1 min-w-0">
                 <div className="font-semibold">{subject.name}</div>
                 <div
@@ -83,8 +116,6 @@ export default function SubjectsSidebar() {
                   {subject.description}
                 </div>
               </div>
-
-              {/* Arrow indicator */}
               <ChevronRight
                 className={`
                   h-4 w-4 transition-all duration-200
@@ -95,9 +126,9 @@ export default function SubjectsSidebar() {
                   }
                 `}
               />
-
-              {/* Active indicator */}
-              {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-600 rounded-r-full" />}
+              {isActive && (
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-600 rounded-r-full" />
+              )}
             </Link>
           );
         })}
