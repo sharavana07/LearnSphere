@@ -179,7 +179,7 @@ export default function SubjectsPage() {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold mb-2">Subjects</h1>
+          <h1 className="text-4xl font-bold mb-2">Learing</h1>
           <p className="text-indigo-100 text-lg">Master your subjects with AI-powered learning paths, interactive quizzes, and curated resources</p>
         </div>
       </div>
