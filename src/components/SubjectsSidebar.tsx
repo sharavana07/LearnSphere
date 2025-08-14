@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, Users, Target, ChevronRight } from "lucide-react";
 
+
 const learning = [
   {
     name: "Gamification",

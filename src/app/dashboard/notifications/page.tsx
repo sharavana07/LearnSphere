@@ -1,7 +1,6 @@
-
 "use client";
 import { useState } from 'react';
-import { Bell, BookOpen, Trophy, Flame, X, Check, Clock, Star } from 'lucide-react';
+import { Bell, BookOpen, Trophy, Flame, X, Check, Clock, Star, Target } from 'lucide-react';
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState([
@@ -51,6 +50,12 @@ export default function NotificationsPage() {
     }
   ]);
 
+  const [currentGoal, setCurrentGoal] = useState(null);
+  const [showGoalModal, setShowGoalModal] = useState(false);
+  const [newGoal, setNewGoal] = useState('');
+  const [goalDescription, setGoalDescription] = useState('');
+  const [isSettingGoal, setIsSettingGoal] = useState(false);
+
   const unreadCount = notifications.filter(n => n.unread).length;
 
   const markAsRead = (id) => {
@@ -87,6 +92,45 @@ export default function NotificationsPage() {
     return colors[color];
   };
 
+  const handleSetGoal = async () => {
+    if (!newGoal || !goalDescription) return;
+    
+    setIsSettingGoal(true);
+    
+    try {
+      // In a real app, you'd get the user_id from your auth system
+      const userId = "0a2e65ee-ccde-4c38-86ad-2794eebf2ae5";
+      
+      const response = await fetch('https://a1678584396a.ngrok-free.app/learning/set-goal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json'
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          goal: newGoal,
+          description: goalDescription
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setCurrentGoal({
+          goal: data.goal,
+          description: goalDescription
+        });
+        setShowGoalModal(false);
+      } else {
+        console.error('Failed to set goal');
+      }
+    } catch (error) {
+      console.error('Error setting goal:', error);
+    } finally {
+      setIsSettingGoal(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
       <div className="max-w-4xl mx-auto">
@@ -121,7 +165,7 @@ export default function NotificationsPage() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-100 rounded-lg">
@@ -141,7 +185,7 @@ export default function NotificationsPage() {
               </div>
               <div>
                 <p className="text-slate-600 text-sm">Current Streak</p>
-                <p className="text-2xl font-bold text-slate-900">7 days</p>
+                <p className="text-2xl font-bold text-slate-900">5 days</p>
               </div>
             </div>
           </div>
@@ -157,7 +201,84 @@ export default function NotificationsPage() {
               </div>
             </div>
           </div>
+
+          {/* Goal Card */}
+          <div 
+            className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors"
+            onClick={() => setShowGoalModal(true)}
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <Target className="w-5 h-5 text-green-600" />
+              </div>
+              <div>
+                <p className="text-slate-600 text-sm">Learning Goal</p>
+                <p className="text-2xl font-bold text-slate-900 truncate">
+                  {currentGoal ? currentGoal.goal : "Not set"}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Goal Setting Modal */}
+        {showGoalModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-slate-900">Set Learning Goal</h3>
+                <button 
+                  onClick={() => setShowGoalModal(false)}
+                  className="text-slate-400 hover:text-slate-600"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Goal</label>
+                  <input
+                    type="text"
+                    value={newGoal}
+                    onChange={(e) => setNewGoal(e.target.value)}
+                    placeholder="e.g. career, certification, skill"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
+                  <textarea
+                    value={goalDescription}
+                    onChange={(e) => setGoalDescription(e.target.value)}
+                    placeholder="Describe your learning goal"
+                    rows={3}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                
+                <div className="flex justify-end gap-3 pt-2">
+                  <button
+                    onClick={() => setShowGoalModal(false)}
+                    className="px-4 py-2 text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSetGoal}
+                    disabled={isSettingGoal || !newGoal || !goalDescription}
+                    className={`px-4 py-2 text-white bg-green-600 hover:bg-green-700 rounded-lg font-medium ${
+                      (isSettingGoal || !newGoal || !goalDescription) ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
+                  >
+                    {isSettingGoal ? 'Setting...' : 'Set Goal'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Notifications List */}
         <div className="space-y-4">

@@ -7,8 +7,8 @@ import { User, Mail, FileText, Camera, Edit3, Check, X } from 'lucide-react';
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    name: 'David Watson',
-    email: 'davidwaston@example.com',
+    name: 'test123',
+    email: 'test123@gmail.com',
     bio: 'Passionate learner exploring the world of tech and innovation!'
   });
   const [tempData, setTempData] = useState(profileData);
@@ -63,10 +63,9 @@ export default function ProfilePage() {
               <div className="flex flex-col sm:flex-row sm:items-end sm:space-x-6">
                 <div className="relative mb-4 sm:mb-0">
                   <img
-                    src="https://via.placeholder.com/120"
-                    alt="Profile"
-                    className="w-32 h-32 rounded-2xl border-4 border-white shadow-lg object-cover"
-                  />
+                    src="/images/profile-pic.jpg"
+                    alt="Profile Picture"
+                    className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-white shadow-lg object-cover"></img>
                   <button className="absolute bottom-2 right-2 bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-full shadow-lg transition-colors">
                     <Camera size={16} />
                   </button>

@@ -3,6 +3,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface Course {
   id: number;
@@ -279,15 +280,17 @@ export default function CoursesPage() {
                   </div>
                 </div>
 
-                {/* Action Button */}
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
-                  {course.progress === 0 ? 'Start Course' : 
-                   course.progress === 100 ? 'Review Course' : 'Continue Learning'}
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
+                <Link
+  href={`/dashboard/courses/${course.id}`}
+  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center"
+>
+  {course.progress === 0 ? 'Start Course' : 
+   course.progress === 100 ? 'Review Course' : 'Continue Learning'}
+  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+  </svg>
+</Link>
+</div>
             </div>
           ))}
         </div>

@@ -45,29 +45,57 @@ useEffect(() => {
   return () => window.removeEventListener('mousemove', handleMouseMove);
 }, []);
 
-  const FloatingOrbs = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div 
-        className="absolute w-96 h-96 bg-gradient-to-r from-indigo-300/20 to-purple-300/20 rounded-full blur-3xl animate-pulse"
-        style={{
+const FloatingOrbs = () => {
+  const [positions, setPositions] = useState<{ orb1: any; orb2: any } | null>(null);
+
+  useEffect(() => {
+    const updatePositions = () => {
+      setPositions({
+        orb1: {
           left: `${Math.sin(Date.now() / 10000) * 100 + 20}%`,
           top: `${Math.cos(Date.now() / 8000) * 50 + 10}%`,
-          animation: 'float 20s ease-in-out infinite'
-        }}
-      />
-      <div 
-        className="absolute w-64 h-64 bg-gradient-to-r from-blue-300/15 to-indigo-300/15 rounded-full blur-2xl"
-        style={{
+        },
+        orb2: {
           right: `${Math.sin(Date.now() / 12000 + Math.PI) * 80 + 10}%`,
           bottom: `${Math.cos(Date.now() / 9000 + Math.PI) * 60 + 20}%`,
-          animation: 'float 15s ease-in-out infinite reverse'
-        }}
+        },
+      });
+    };
+    updatePositions();
+    const interval = setInterval(updatePositions, 1000 / 30); // ~30 FPS
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!positions) return null; // render nothing until client has calculated positions
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        className="absolute w-96 h-96 bg-gradient-to-r from-indigo-300/20 to-purple-300/20 rounded-full blur-3xl animate-float-slow"
+        style={positions.orb1}
+      />
+      <div
+        className="absolute w-64 h-64 bg-gradient-to-r from-blue-300/15 to-indigo-300/15 rounded-full blur-2xl animate-float-fast"
+        style={positions.orb2}
       />
     </div>
   );
+};
 
-  const ParallaxCursor = () => (
-    <div 
+
+const ParallaxCursor = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <div
       className="fixed w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full pointer-events-none z-50 mix-blend-difference opacity-50 transition-all duration-100 ease-out"
       style={{
         left: mousePosition.x - 12,
@@ -76,6 +104,8 @@ useEffect(() => {
       }}
     />
   );
+};
+
 
   return (
     <div className="relative overflow-hidden">
