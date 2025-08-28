@@ -297,7 +297,7 @@ export default function Navbar() {
                     placeholder="Enter your full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 text-sm bg-gray-50/30 hover:bg-white focus:bg-white"
+                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 text-sm text-gray-900 bg-gray-50/30 hover:bg-white focus:bg-white"
                     required
                   />
                 </div>
@@ -326,7 +326,7 @@ export default function Navbar() {
                     placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 text-sm bg-gray-50/30 hover:bg-white focus:bg-white"
+                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 text-sm text-gray-900 bg-gray-50/30 hover:bg-white focus:bg-white"
                     required
                   />
                 </div>
@@ -355,7 +355,7 @@ export default function Navbar() {
                     placeholder="Enter your phone number"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 text-sm bg-gray-50/30 hover:bg-white focus:bg-white"
+                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 text-sm text-gray-900 bg-gray-50/30 hover:bg-white focus:bg-white"
                     required
                   />
                 </div>
